@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Student": {
+    "student": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Student:build:production"
+              "browserTarget": "student:build:production"
             },
             "development": {
-              "browserTarget": "Student:build:development"
+              "browserTarget": "student:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Student:build"
+            "browserTarget": "student:build"
           }
         },
         "test": {
@@ -105,6 +105,6 @@
     }
   },
   "cli": {
-    "analytics": "af91266d-5a37-4ca9-a128-115231663e86"
+    "analytics": "c1041540-049f-4098-81ae-a07cbe44d6ab"
   }
 }
