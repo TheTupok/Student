@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {User, UsersService} from "../../core/services/swagger-gen";
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
-import {forkJoin} from "rxjs";
+import {concat} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogCreateUser} from "../modal/modal.component";
+import {DialogCreateUser} from "../modals/modal-create/modal.component";
+import {ModalEditComponent} from "../modals/modal-edit/modal-edit.component";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {DialogCreateUser} from "../modal/modal.component";
   templateUrl: './student.component.html',
 })
 export class StudentComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'id', 'name', 'group', 'course'];
+  displayedColumns: string[] = ['select', 'id', 'name', 'group', 'course', 'edit'];
   dataSource = new MatTableDataSource<User>([]);
   selection = new SelectionModel<User>(true, []);
 
@@ -47,16 +48,25 @@ export class StudentComponent implements OnInit {
     this.selection.select(...this.dataSource.data);
   }
 
+  openCreateStudentDialog(): void {
+    const dialogRef = this.dialog.open(DialogCreateUser);
+    dialogRef.afterClosed().subscribe(() => {
+      this.initDataSource()
+    })
+  }
+
+  openEditStudentDialog(user: User): void {
+    const dialogRef = this.dialog.open(ModalEditComponent, {
+      data: user,
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.initDataSource()
+    })
+  }
+
   removeSelectedStudent() {
     const ids = this.selection.selected.map(x => Number(x.id));
     const removeOperations$ = ids.map(x => this.userService.deleteStudentById(x));
-    forkJoin(removeOperations$).subscribe(() => this.initDataSource())
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogCreateUser);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    concat(...removeOperations$).subscribe(() => this.initDataSource())
   }
 }

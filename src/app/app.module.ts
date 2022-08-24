@@ -15,9 +15,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
-import {DialogCreateUser} from "./components/modal/modal.component";
+import {DialogCreateUser} from "./components/modals/modal-create/modal.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import { ModalEditComponent } from './components/modals/modal-edit/modal-edit.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {MatInputModule} from "@angular/material/input";
     AppComponent,
     StudentPageComponent,
     StudentComponent,
-    DialogCreateUser
+    DialogCreateUser,
+    ModalEditComponent
   ],
   imports: [
     BrowserModule,

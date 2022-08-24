@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {UsersService} from "../../../core/services/swagger-gen";
 
 @Component({
   selector: 'dialog-content',
@@ -9,14 +10,17 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class DialogCreateUser implements OnInit {
   myForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UsersService
+  ) {
   }
 
   ngOnInit() {
     this._createForm()
   }
 
-  private _createForm(){
+  private _createForm() {
     this.myForm = this.fb.group({
       name: '',
       group: '',
@@ -24,11 +28,7 @@ export class DialogCreateUser implements OnInit {
     });
   }
 
-
-
-  onSubmit(form: FormGroup) {
-    console.log('Name:', form.value.name)
-    console.log('Group:', form.value.group)
-    console.log('Course:', form.value.course)
+  onSubmit() {
+    this.userService.createStudent(this.myForm.getRawValue()).subscribe()
   }
 }
