@@ -8,13 +8,24 @@ import {MatSliderModule} from '@angular/material/slider';
 import {StudentPageComponent} from './pages/student-page/student-page.component';
 import {StudentComponent} from "./components/student/student.component";
 import {MatTableModule} from "@angular/material/table";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ApiModule, BASE_PATH} from "./core/services/swagger-gen";
+import {HttpClientModule} from "@angular/common/http";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import {DialogCreateUser} from "./components/modal/modal.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentPageComponent,
-    StudentComponent
+    StudentComponent,
+    DialogCreateUser
   ],
   imports: [
     BrowserModule,
@@ -22,9 +33,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     MatSliderModule,
     MatTableModule,
-    NgbModule
+    NgbModule,
+    ApiModule,
+    HttpClientModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
-  providers: [],
+  providers: [{provide: BASE_PATH, useValue: 'http://localhost:5000'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

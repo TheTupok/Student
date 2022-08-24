@@ -1,0 +1,2 @@
+java -jar swagger-codegen-cli-OA3.jar generate -i http://localhost:5000/swagger-json -l typescript-angular -o src/app/core/services/swagger-gen --additional-properties ngVersion=14 -t src\app\core\services\swagger-templates
+
