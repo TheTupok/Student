@@ -1,27 +1,23 @@
-# Student
+# Student App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This project is for creating lists of students. It can add, remove and edit students
 
-## Development server
+# How to start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+npm install, npm start. Open browser url http://localhost:4200
 
-## Code scaffolding
+# Student-Client-Generations.txt
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To generate a swagger service, you need to write the data Student-Client-Generations.txt in the terminal.
 
-## Build
+# How to configure Student-Client-Generations.txt
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+After -i path to swagger.json. after -o path to generate swagger services. after -t path to swagger templates
 
-## Running unit tests
+# src/app/service
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+auto-generated swagger and swagger-templates files
 
-## Running end-to-end tests
+# src/app/components/modals
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Dialog windows for creating and editing students
