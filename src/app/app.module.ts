@@ -12,13 +12,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ApiModule, BASE_PATH} from "./core/services/swagger-gen";
 import {HttpClientModule} from "@angular/common/http";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {DialogCreateUser} from "./components/modals/modal-create/modal.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { ModalEditComponent } from './components/modals/modal-edit/modal-edit.component';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -43,7 +44,9 @@ import { ModalEditComponent } from './components/modals/modal-edit/modal-edit.co
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    FormsModule
   ],
   providers: [{provide: BASE_PATH, useValue: 'http://localhost:5000'}],
   bootstrap: [AppComponent]

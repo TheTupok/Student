@@ -148,6 +148,93 @@ export class UsersService {
     }
 
     /**
+     * Get student.
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAlltudents(observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
+    public getAlltudents(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
+    public getAlltudents(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public getAlltudents(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<User>>('get',`${this.basePath}/users`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get filtered student.
+     * 
+     * @param filter 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getFilteredStudents(filter: string, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
+    public getFilteredStudents(filter: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
+    public getFilteredStudents(filter: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public getFilteredStudents(filter: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (filter === null || filter === undefined) {
+            throw new Error('Required parameter filter was null or undefined when calling getFilteredStudents.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (filter !== undefined && filter !== null) {
+            queryParameters = queryParameters.set('filter', <any>filter);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<User>>('get',`${this.basePath}/users/?`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Get user by ID
      * 
      * @param id 
@@ -181,44 +268,6 @@ export class UsersService {
         ];
 
         return this.httpClient.request<User>('get',`${this.basePath}/users/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get student.
-     * 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getStudents(observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
-    public getStudents(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
-    public getStudents(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
-    public getStudents(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'text/plain',
-            'application/json',
-            'text/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Array<User>>('get',`${this.basePath}/users`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

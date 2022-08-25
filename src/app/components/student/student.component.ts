@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {User, UsersService} from "../../core/services/swagger-gen";
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
-import {concat} from "rxjs";
+import {concat, fromEvent, switchMap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogCreateUser} from "../modals/modal-create/modal.component";
 import {ModalEditComponent} from "../modals/modal-edit/modal-edit.component";
@@ -12,10 +12,13 @@ import {ModalEditComponent} from "../modals/modal-edit/modal-edit.component";
   selector: 'app-student',
   templateUrl: './student.component.html',
 })
+
 export class StudentComponent implements OnInit {
   displayedColumns: string[] = ['select', 'id', 'name', 'group', 'course', 'edit'];
   dataSource = new MatTableDataSource<User>([]);
   selection = new SelectionModel<User>(true, []);
+
+  // textFilter = '';
 
   constructor(
     private userService: UsersService,
@@ -28,7 +31,7 @@ export class StudentComponent implements OnInit {
   }
 
   private initDataSource(): void {
-    this.userService.getStudents().subscribe((data) => {
+    this.userService.getAlltudents().subscribe((data) => {
       this.dataSource.data = data;
     })
   }
@@ -67,6 +70,16 @@ export class StudentComponent implements OnInit {
   removeSelectedStudent() {
     const ids = this.selection.selected.map(x => Number(x.id));
     const removeOperations$ = ids.map(x => this.userService.deleteStudentById(x));
-    concat(...removeOperations$).subscribe(() => this.initDataSource())
+    concat(...removeOperations$).subscribe(() => this.initDataSource());
+  }
+
+  @ViewChild('filter') filter: ElementRef;
+
+  ngAfterViewInit() {
+    fromEvent(this.filter.nativeElement, 'input')
+      .pipe(switchMap((data: any) => this.userService.getFilteredStudents(data.target.value)))
+      .subscribe((data) => {
+        this.dataSource.data = data
+      });
   }
 }

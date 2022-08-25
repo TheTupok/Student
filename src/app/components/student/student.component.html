@@ -1,6 +1,14 @@
-<div class="row m-2">
-  <h1 class="col-6 text-start m-0 fs-2">Student App</h1>
-  <div class="col-6 text-end">
+<div class="row">
+  <h1 class="col text-start fs-2 mt-4 ms-3">Student App</h1>
+
+  <div class="col">
+    <mat-form-field class="w-100 pt-3" appearance="fill">
+      <mat-label>Filter</mat-label>
+      <input #filter matInput type="text">
+    </mat-form-field>
+  </div>
+
+  <div class="col text-end mt-4">
     <button mat-flat-button
             [disabled]="selection.selected.length != 0"
             (click)="openCreateStudentDialog()"
@@ -56,7 +64,7 @@
   </ng-container>
 
   <ng-container matColumnDef="edit">
-    <th style="width: 5%" class="text-end" mat-header-cell *matHeaderCellDef> </th>
+    <th style="width: 5%" class="text-end" mat-header-cell *matHeaderCellDef></th>
     <td class="text-end" mat-cell *matCellDef="let element">
       <button mat-raised-button (click)="openEditStudentDialog(element)">Edit</button>
     </td>
