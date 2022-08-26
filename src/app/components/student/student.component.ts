@@ -6,6 +6,8 @@ import {concat, fromEvent, switchMap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogCreateUser} from "../modals/modal-create/modal.component";
 import {ModalEditComponent} from "../modals/modal-edit/modal-edit.component";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -17,17 +19,22 @@ export class StudentComponent implements OnInit {
   displayedColumns: string[] = ['select', 'id', 'name', 'group', 'course', 'edit'];
   dataSource = new MatTableDataSource<User>([]);
   selection = new SelectionModel<User>(true, []);
-
-  // textFilter = '';
+  configurationForm: FormGroup;
 
   constructor(
     private userService: UsersService,
+    private fb: FormBuilder,
+    private translateService: TranslateService,
     public dialog: MatDialog
   ) {
   }
 
   ngOnInit(): void {
     this.initDataSource()
+    this._createConfigurationForm()
+
+    this.configurationForm.controls['Language'].valueChanges
+      .subscribe(newValue => this.translateService.use(newValue))
   }
 
   private initDataSource(): void {
@@ -81,5 +88,12 @@ export class StudentComponent implements OnInit {
       .subscribe((data) => {
         this.dataSource.data = data
       });
+  }
+
+  private _createConfigurationForm() {
+    this.configurationForm = this.fb.group({
+      toggleServer: true,
+      Language: 'en'
+    });
   }
 }

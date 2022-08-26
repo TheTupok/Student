@@ -1,0 +1,18 @@
+{
+  "TableNameColumn": {
+    "id": "Id",
+    "name": "Имя",
+    "group": "Группа",
+    "course": "Курс"
+  },
+  "Button": {
+    "CreateUser": "Создать студента",
+    "DeleteUser": "Удалить студента",
+    "EditUser": "Изменить"
+  },
+  "Search": "Поиск",
+  "LocalStorage": "Локальное хранилище",
+  "EN": "Англ",
+  "RU": "Рус",
+  "Language": "Язык"
+}

@@ -10,7 +10,7 @@ import {StudentComponent} from "./components/student/student.component";
 import {MatTableModule} from "@angular/material/table";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ApiModule, BASE_PATH} from "./core/services/swagger-gen";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
@@ -20,6 +20,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { ModalEditComponent } from './components/modals/modal-edit/modal-edit.component';
 import {MatIconModule} from "@angular/material/icon";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSelectModule} from "@angular/material/select";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
 
 @NgModule({
@@ -46,10 +50,25 @@ import {MatIconModule} from "@angular/material/icon";
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
+    },
+    useDefaultLang: false,
+  })
   ],
   providers: [{provide: BASE_PATH, useValue: 'http://localhost:5000'}],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
+}
+
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return new TranslateHttpLoader(http, './assets/locale/', '.json');
 }

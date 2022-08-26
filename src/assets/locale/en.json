@@ -1,0 +1,18 @@
+{
+  "TableNameColumn": {
+    "id": "Id",
+    "name": "Name",
+    "group": "Group",
+    "course": "Course"
+  },
+  "Button": {
+    "CreateUser": "Create student",
+    "DeleteUser": "Delete student",
+    "EditUser": "Edit"
+  },
+  "Search": "Search",
+  "LocalStorage": "Local Storage",
+  "EN": "En",
+  "RU": "Ru",
+  "Language": "Language"
+}
