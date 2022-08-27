@@ -21,3 +21,13 @@ auto-generated swagger and swagger-templates files
 # src/app/components/modals
 
 Dialog windows for creating and editing students
+
+# Localization of languages
+
+Dictionaries are in assets/locale/*.json. At the moment there is English and Russian
+
+# Ability to work with local storage or with a server
+
+Toggle at the top of the window allows you to switch the mode of working with data (local storage or server). When switching without rebooting, the data is updated and displayed in a table
+
+
