@@ -1,7 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {User, UsersService} from "../../../core/services/swagger-gen";
+import {User} from "../../../core/services/swagger-gen";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {InternalUserService} from "../../../core/services/internal-user.service";
+
+export interface EditDialogData {
+  user: User;
+  realServer: boolean
+}
 
 @Component({
   selector: 'app-modals-edit',
@@ -9,22 +15,22 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
   styleUrls: ['./modal-edit.component.scss']
 })
 export class ModalEditComponent implements OnInit {
-  myForm: FormGroup;
+  editUserForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UsersService,
-    @Inject(MAT_DIALOG_DATA) public data: User,
+    private internalUserService: InternalUserService,
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogData,
   ) {
   }
 
   ngOnInit() {
     this._createForm();
-    this.myForm.patchValue(this.data);
+    this.editUserForm.patchValue(this.data.user);
   }
 
   private _createForm() {
-    this.myForm = this.fb.group({
+    this.editUserForm = this.fb.group({
       id: '',
       name: '',
       group: '',
@@ -33,6 +39,6 @@ export class ModalEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.userService.updateStudent(this.myForm.getRawValue()).subscribe();
+    this.internalUserService.editStudent(this.data.realServer, this.editUserForm.getRawValue()).subscribe();
   }
 }

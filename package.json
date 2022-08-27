@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "update-swagger": "java -jar swagger-codegen-cli-OA3.jar generate -i http://localhost:5000/swagger-json -l typescript-angular -o src/app/core/services/swagger-gen --additional-properties ngVersion=14 -t src\\app\\core\\services\\swagger-templates"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
+    "ngx-webstorage-service": "^5.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

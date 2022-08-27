@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {UsersService} from "../../../core/services/swagger-gen";
+import {InternalUserService} from "../../../core/services/internal-user.service";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'dialog-content',
@@ -8,11 +9,12 @@ import {UsersService} from "../../../core/services/swagger-gen";
   styleUrls: ['./modal.component.scss']
 })
 export class DialogCreateUser implements OnInit {
-  myForm: FormGroup;
+  createUserForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UsersService
+    private internalUserService: InternalUserService,
+    @Inject(MAT_DIALOG_DATA) public data: boolean
   ) {
   }
 
@@ -21,7 +23,7 @@ export class DialogCreateUser implements OnInit {
   }
 
   private _createForm() {
-    this.myForm = this.fb.group({
+    this.createUserForm = this.fb.group({
       name: '',
       group: '',
       course: ''
@@ -29,6 +31,6 @@ export class DialogCreateUser implements OnInit {
   }
 
   onSubmit() {
-    this.userService.createStudent(this.myForm.getRawValue()).subscribe()
+    this.internalUserService.createStudent(this.data,this.createUserForm.getRawValue()).subscribe()
   }
 }

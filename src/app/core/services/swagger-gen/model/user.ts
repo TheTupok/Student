@@ -13,6 +13,6 @@
 export interface User { 
     id?: number;
     name?: string;
-    course?: number;
+    course?: string;
     group?: string;
 }

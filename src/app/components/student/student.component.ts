@@ -1,13 +1,14 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User, UsersService} from "../../core/services/swagger-gen";
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
-import {concat, fromEvent, switchMap} from "rxjs";
+import {concat,} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogCreateUser} from "../modals/modal-create/modal.component";
 import {ModalEditComponent} from "../modals/modal-edit/modal-edit.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
+import {InternalUserService} from "../../core/services/internal-user.service";
 
 
 @Component({
@@ -21,24 +22,54 @@ export class StudentComponent implements OnInit {
   selection = new SelectionModel<User>(true, []);
   configurationForm: FormGroup;
 
+  language = 'en'
+  realServer = false
+  SearchTerm = ''
+
   constructor(
     private userService: UsersService,
     private fb: FormBuilder,
     private translateService: TranslateService,
+    private internalUserService: InternalUserService,
     public dialog: MatDialog
   ) {
   }
 
+
   ngOnInit(): void {
-    this.initDataSource()
     this._createConfigurationForm()
+    this.configurationForm.controls['ToggleServer'].valueChanges
+      .subscribe((value) => {
+        this.realServer = value
+        this.initDataSource(this.realServer, this.SearchTerm)
+      })
 
     this.configurationForm.controls['Language'].valueChanges
-      .subscribe(newValue => this.translateService.use(newValue))
+      .subscribe(newValue => {
+        this.language = newValue
+        this.translateService.use(this.language)
+      })
+
+    this.configurationForm.controls['SearchTerm'].valueChanges
+      .subscribe(data => {
+        this.SearchTerm = data
+        this.initDataSource(this.realServer, this.SearchTerm)
+      })
+
+
+    this.initDataSource(this.realServer, this.SearchTerm)
   }
 
-  private initDataSource(): void {
-    this.userService.getAlltudents().subscribe((data) => {
+  private _createConfigurationForm() {
+    this.configurationForm = this.fb.group({
+      ToggleServer: false,
+      Language: 'en',
+      SearchTerm: ''
+    });
+  }
+
+  public initDataSource(isRealServer: boolean, searchTerm: string): void {
+    this.internalUserService.getAllStudents(isRealServer, searchTerm).subscribe(data => {
       this.dataSource.data = data;
     })
   }
@@ -58,42 +89,27 @@ export class StudentComponent implements OnInit {
     this.selection.select(...this.dataSource.data);
   }
 
-  openCreateStudentDialog(): void {
-    const dialogRef = this.dialog.open(DialogCreateUser);
+  openCreateStudentDialog(realServer: boolean): void {
+    const dialogRef = this.dialog.open(DialogCreateUser, {
+      data: realServer
+    });
     dialogRef.afterClosed().subscribe(() => {
-      this.initDataSource()
+      this.initDataSource(this.realServer, this.SearchTerm)
     })
   }
 
-  openEditStudentDialog(user: User): void {
+  openEditStudentDialog(realServer: boolean, user: User): void {
     const dialogRef = this.dialog.open(ModalEditComponent, {
-      data: user,
+      data: {user, realServer}
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.initDataSource()
+      this.initDataSource(this.realServer, this.SearchTerm)
     })
   }
 
-  removeSelectedStudent() {
+  removeSelectedStudents() {
     const ids = this.selection.selected.map(x => Number(x.id));
-    const removeOperations$ = ids.map(x => this.userService.deleteStudentById(x));
-    concat(...removeOperations$).subscribe(() => this.initDataSource());
-  }
-
-  @ViewChild('filter') filter: ElementRef;
-
-  ngAfterViewInit() {
-    fromEvent(this.filter.nativeElement, 'input')
-      .pipe(switchMap((data: any) => this.userService.getFilteredStudents(data.target.value)))
-      .subscribe((data) => {
-        this.dataSource.data = data
-      });
-  }
-
-  private _createConfigurationForm() {
-    this.configurationForm = this.fb.group({
-      toggleServer: true,
-      Language: 'en'
-    });
+    const removeOperations$ = ids.map(x => this.internalUserService.deleteById(this.realServer, x));
+    concat(...removeOperations$).subscribe(() => this.initDataSource(this.realServer, this.SearchTerm));
   }
 }

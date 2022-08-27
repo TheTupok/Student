@@ -14,27 +14,31 @@
         </mat-select>
       </mat-form-field>
     </form>
-    <mat-slide-toggle formControlName="toggleServer" class="m-3">
-      {{ 'LocalStorage' | translate}}
-    </mat-slide-toggle>
+    <form [formGroup]="configurationForm">
+      <mat-slide-toggle formControlName="ToggleServer" class="m-3">
+        {{ 'Server' | translate}}
+      </mat-slide-toggle>
+    </form>
   </div>
 
   <div class="col">
-    <mat-form-field class="w-100" appearance="fill">
-      <mat-label>{{ 'Search' | translate }}</mat-label>
-      <input #filter matInput type="text">
-    </mat-form-field>
+    <form [formGroup]="configurationForm">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>{{ 'Search' | translate }}</mat-label>
+        <input formControlName="SearchTerm" matInput type="text">
+      </mat-form-field>
+    </form>
   </div>
 
   <div class="col text-end m-3">
     <button mat-flat-button
             [disabled]="selection.selected.length != 0"
-            (click)="openCreateStudentDialog()"
+            (click)="openCreateStudentDialog(this.realServer)"
             class="mx-1"
     >{{ 'Button.CreateUser' | translate }}
     </button>
     <button mat-flat-button
-            (click)="removeSelectedStudent()"
+            (click)="removeSelectedStudents()"
             [disabled]="selection.selected.length == 0"
             class="mx-1"
     >{{ 'Button.DeleteUser' | translate }}
@@ -83,7 +87,8 @@
   <ng-container matColumnDef="edit">
     <th style="width: 5%" class="text-end" mat-header-cell *matHeaderCellDef></th>
     <td class="text-end" mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="openEditStudentDialog(element)">{{ 'Button.EditUser' | translate }}</button>
+      <button mat-raised-button
+              (click)="openEditStudentDialog(this.realServer,element)">{{ 'Button.EditUser' | translate }}</button>
     </td>
   </ng-container>
 
