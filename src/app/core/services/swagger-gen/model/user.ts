@@ -14,4 +14,5 @@ export interface User {
     id?: number;
     name?: string;
     course?: number;
+    group?: string;
 }

@@ -13,4 +13,5 @@
 export interface CreateUser { 
     name?: string;
     course?: number;
+    group?: string;
 }
