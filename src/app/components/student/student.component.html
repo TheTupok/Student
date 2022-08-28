@@ -43,6 +43,16 @@
             class="mx-1"
     >{{ 'Button.DeleteUser' | translate }}
     </button>
+    <button mat-flat-button *ngIf="!isTokenExists()"
+            [disabled]="!this.realServer"
+            (click)="openLoginDialog()"
+    >{{ 'Button.LogIn' | translate }}
+    </button>
+    <button mat-flat-button *ngIf="isTokenExists()"
+            [disabled]="!this.realServer"
+            (click)="this.storageUserService.deleteToken()"
+    >{{ 'Button.LogOut' | translate }}
+    </button>
   </div>
 
 </div>

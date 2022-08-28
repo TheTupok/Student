@@ -9,6 +9,8 @@ import {ModalEditComponent} from "../modals/modal-edit/modal-edit.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
 import {InternalUserService} from "../../core/services/internal-user.service";
+import {LoginDialogComponent} from "../modals/login-dialog/login-dialog.component";
+import {StorageUserService} from "../../core/services/users-local.service";
 
 
 @Component({
@@ -31,10 +33,10 @@ export class StudentComponent implements OnInit {
     private fb: FormBuilder,
     private translateService: TranslateService,
     private internalUserService: InternalUserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public storageUserService: StorageUserService
   ) {
   }
-
 
   ngOnInit(): void {
     this._createConfigurationForm()
@@ -56,7 +58,6 @@ export class StudentComponent implements OnInit {
         this.initDataSource(this.realServer, this.SearchTerm)
       })
 
-
     this.initDataSource(this.realServer, this.SearchTerm)
   }
 
@@ -66,6 +67,10 @@ export class StudentComponent implements OnInit {
       Language: 'en',
       SearchTerm: ''
     });
+  }
+
+  isTokenExists() {
+    return localStorage.getItem('Token') != null;
   }
 
   public initDataSource(isRealServer: boolean, searchTerm: string): void {
@@ -102,6 +107,13 @@ export class StudentComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalEditComponent, {
       data: {user, realServer}
     });
+    dialogRef.afterClosed().subscribe(() => {
+      this.initDataSource(this.realServer, this.SearchTerm)
+    })
+  }
+
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginDialogComponent);
     dialogRef.afterClosed().subscribe(() => {
       this.initDataSource(this.realServer, this.SearchTerm)
     })

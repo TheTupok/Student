@@ -8,6 +8,7 @@ import {User} from "./swagger-gen";
 
 export class StorageUserService {
   storageUsersKey = 'Users'
+  storageTokenKey = 'Token'
 
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService,
@@ -61,5 +62,18 @@ export class StorageUserService {
       allUsers.filter((x: User) => x.id != id)
     )
     return of(true)
+  }
+
+  getToken(){
+    return this.storage.get(this.storageTokenKey)
+  }
+
+  createToken(data: any) {
+    const token = data['token']
+    this.storage.set(this.storageTokenKey, token)
+  }
+
+  deleteToken() {
+    this.storage.remove(this.storageTokenKey)
   }
 }
