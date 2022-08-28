@@ -292,10 +292,10 @@ export class UsersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateStudent(body?: User, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public updateStudent(body?: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public updateStudent(body?: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public updateStudent(body?: User, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateStudent(body?: CreateUser, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public updateStudent(body?: CreateUser, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public updateStudent(body?: CreateUser, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public updateStudent(body?: CreateUser, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let headers = this.defaultHeaders;

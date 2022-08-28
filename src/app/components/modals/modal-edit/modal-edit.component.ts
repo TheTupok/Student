@@ -26,6 +26,7 @@ export class ModalEditComponent implements OnInit {
 
   ngOnInit() {
     this._createForm();
+    console.log(this.data.user)
     this.editUserForm.patchValue(this.data.user);
   }
 
@@ -34,7 +35,8 @@ export class ModalEditComponent implements OnInit {
       id: '',
       name: '',
       group: '',
-      course: ''
+      course: '',
+      lastModificationHash: ''
     });
   }
 

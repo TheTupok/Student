@@ -10,8 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface User { 
-    id?: number;
+export interface UpdateUser { 
     name?: string;
     course?: string;
     group?: string;
