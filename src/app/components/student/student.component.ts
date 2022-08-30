@@ -65,7 +65,8 @@ export class StudentComponent implements OnInit {
     this.configurationForm = this.fb.group({
       ToggleServer: false,
       Language: 'en',
-      SearchTerm: ''
+      SearchTerm: '',
+      undoId: 0
     });
   }
 
@@ -123,5 +124,11 @@ export class StudentComponent implements OnInit {
     const ids = this.selection.selected.map(x => Number(x.id));
     const removeOperations$ = ids.map(x => this.internalUserService.deleteById(this.realServer, x));
     concat(...removeOperations$).subscribe(() => this.initDataSource(this.realServer, this.SearchTerm));
+  }
+
+  onSubmitUndo(){
+    this.userService.undoById(this.configurationForm.controls['undoId'].value).subscribe(() =>{
+      this.initDataSource(this.realServer, this.SearchTerm)
+    })
   }
 }

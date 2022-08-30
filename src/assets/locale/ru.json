@@ -10,11 +10,13 @@
     "DeleteUser": "Удалить студента",
     "EditUser": "Изменить",
     "LogIn": "Войти",
-    "LogOut": "Выйти"
+    "LogOut": "Выйти",
+    "Undo": "Вернуть"
   },
   "Search": "Поиск",
   "Server": "Сервер",
   "EN": "Англ",
   "RU": "Рус",
-  "Language": "Язык"
+  "Language": "Язык",
+  "Transaction ID": "Ид операции"
 }

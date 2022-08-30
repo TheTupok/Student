@@ -10,11 +10,13 @@
     "DeleteUser": "Delete student",
     "EditUser": "Edit",
     "LogIn": "LogIn",
-    "LogOut": "LogOut"
+    "LogOut": "LogOut",
+    "Undo": "Undo"
   },
   "Search": "Search",
   "Server": "Server",
   "EN": "En",
   "RU": "Ru",
-  "Language": "Language"
+  "Language": "Language",
+  "Transaction ID": "Transaction ID"
 }

@@ -106,3 +106,12 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
+<form (ngSubmit)="onSubmitUndo()" [formGroup]="configurationForm" class="m-3">
+  <mat-form-field class="example-form-field me-2" appearance="fill" style="width: 10%">
+    <mat-label>{{"Transaction ID" | translate}}</mat-label>
+    <input matInput type="text" formControlName="undoId">
+  </mat-form-field>
+  <button [disabled]="!this.realServer" mat-button type="submit">{{ "Button.Undo" | translate}}</button>
+</form>
+
+
