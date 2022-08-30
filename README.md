@@ -1,6 +1,6 @@
 # Student App
 
-This project is used as a project that allows you to CRUD operations with either the server or local storage
+This project is used as a project that allows you to CRUD operations with either the server or local storage. It is also possible to use undo redo
 
 # How to start
 
